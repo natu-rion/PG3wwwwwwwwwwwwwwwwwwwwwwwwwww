@@ -8,30 +8,47 @@
 
 using namespace std;
 
-int Recursive(int kyuuryou, int hour, int kotei) {
-    if (kyuuryou >= kotei) {
-        printf("%d時間後に超える\n", hour);
-        return hour;
-    }
 
-    printf("時給: %d　基準: %d\n", kyuuryou, kotei);
+typedef void(*PFunc)(int);
 
-    // 給料を更新
-    kyuuryou = kyuuryou * 2 - 50;
-
-    // 固定値増加
-    kotei += 1072;
-
-    // 再帰呼び出し
-    return Recursive(kyuuryou, hour + 1, kotei);
+// サイコロの出目を決定する関数
+int roll_dice() {
+    return rand() % 6 + 1;
 }
 
-int main() {
-    int kyuuryou = 100;
-    int hour = 0;
-    int kotei = 1226;
 
-    Recursive(kyuuryou, hour, kotei);
+// 判定を行うコールバック関数
+void judge_result(int result) {
+
+    int input;
+
+    printf("サイコロの出目が奇数(1)か偶数(2)か入力:");
+    scanf_s("%d", &input);
+
+    printf("判定中...\n");
+
+    Sleep(3000);
+
+    if ((result % 2 == 1 && input == 1) || (result % 2 == 0 && input == 2)) {
+        printf("正解\n");
+    } else {
+        printf("不正解\n");
+    }
+
+    printf("サイコロの目は%d\n", result);
+}
+
+
+int main(void) {
+
+    srand((int)time(NULL));
+
+    int dice_result = roll_dice();
+
+    PFunc callback = judge_result;
+
+    callback(dice_result);
+
 
     return 0;
 }

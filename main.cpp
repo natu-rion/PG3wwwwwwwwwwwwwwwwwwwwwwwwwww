@@ -6,39 +6,32 @@
 #include <algorithm>
 #include <stdio.h>
 
-
 using namespace std;
 
-int calc(int a, int b) {
-	return a + b;
-}
+int Recursive(int kyuuryou, int hour, int kotei) {
+    if (kyuuryou >= kotei) {
+        printf("%d時間後に超える\n", hour);
+        return hour;
+    }
 
-float calc(float d, float e) {
-	return d + e + 10;
-}
+    printf("時給: %d　基準: %d\n", kyuuryou, kotei);
 
-template <typename Type>
+    // 給料を更新
+    kyuuryou = kyuuryou * 2 - 50;
 
-Type add(Type a, Type b) {
-	return static_cast<Type>(a + b);
-}
+    // 固定値増加
+    kotei += 1072;
 
-template <typename Type>
-
-Type Min(Type a, Type b) {
-	if (a > b) {
-		return static_cast<Type>(b);
-	} else {
-		return static_cast<Type>(a);
-	}
+    // 再帰呼び出し
+    return Recursive(kyuuryou, hour + 1, kotei);
 }
 
 int main() {
+    int kyuuryou = 100;
+    int hour = 0;
+    int kotei = 1226;
 
-	//計算と結果出力
-	printf("%d\n", Min<int>(128, 256));
-	printf("%f\n", Min<float>(52.5f, 55.0f));
-	printf("%lf\n", Min<double>(3.14159265, 2.7182818281));
+    Recursive(kyuuryou, hour, kotei);
 
-	return 0;
+    return 0;
 }

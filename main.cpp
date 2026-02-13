@@ -6,50 +6,29 @@
 #include <algorithm>
 #include <stdio.h>
 #include <cstdio>
-
-using namespace std;
-
-class ANIMAL {
-public:
-    // 鳴く関数（純粋仮想関数）
-    virtual void sound() const = 0;
-};
+#include "IShape.h"
+#include "Circle.h"
+#include "Rectangle.h"
 
 
-class DOG : public ANIMAL {
-public:
-    void sound() const override {
-        printf("イヌ鳴き声：ワン\n");
-    }
-};
+int main(void) {
 
+	IShape* shape[2];
 
-class CAT : public ANIMAL {
-public:
-    void sound() const override {
-        printf("ネコ鳴き声:ニャー\n");
-    }
-};
+	shape[0] = new CIRCLE;
+	shape[1] = new SQUARE;
 
+	printf("円の半径:4\n短形の底辺:2\n短形の高さ:3\n");
 
-class BABY : public ANIMAL {
-public:
-    void sound() const override {
-        printf("赤ちゃんの鳴き声:おギャー\n");
-    }
-};
-int main() {
+	//面積を計算
+	for (int i = 0; i < 2; i++)
+		shape[i]->Size();
 
-    ANIMAL* animal1 = new DOG();
-    ANIMAL* animal2 = new CAT();
-    ANIMAL* animal3 = new BABY();
+	printf("\n");
 
-    animal1->sound();
-    animal2->sound();
-    animal3->sound();
+	//面積を画面に表示
+	for (int i = 0; i < 2; i++)
+		shape[i]->Draw();
 
-    delete animal1;
-    delete animal2;
-
-    return 0;
+	return 0;
 }
